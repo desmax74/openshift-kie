@@ -3,11 +3,10 @@
 ## Installing and Running
 
 - Prerequisites: install qs-playground 8.0-SNAPSHOT
-
-## Examples
-
+```sh
+mvn clean install
 mvn thorntail:run
-
+```
 ### Hello World
 
 Point to http://localhost:8080/rest/hello for Drools hello world
