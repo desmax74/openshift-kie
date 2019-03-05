@@ -1,4 +1,4 @@
-package org.acme.quickstart;
+package org.kie.quickstart.model;
 
 
 public class Person {

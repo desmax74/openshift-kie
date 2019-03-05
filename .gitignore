@@ -28,3 +28,10 @@ target
 *.iml
 .idea
 
+.idea/
+openshift-quickstart.iml
+target/generated-sources/
+target/maven-archiver/
+target/maven-status/
+target/openshift-kie.war.original
+target/openshift-kie/META-INF/
