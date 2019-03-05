@@ -71,6 +71,10 @@
             <artifactId>jaxrs</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.thorntail</groupId>
+            <artifactId>logging</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.etcd</groupId>
             <artifactId>jetcd-core</artifactId>
             <version>${version.jetcd}</version>

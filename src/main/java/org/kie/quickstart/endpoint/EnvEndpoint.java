@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/env")
 public class EnvEndpoint {
 
+  @Path("/all")
   @GET
   @Produces(MediaType.TEXT_PLAIN)
   public String all() {

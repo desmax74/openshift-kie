@@ -23,9 +23,14 @@ import org.slf4j.LoggerFactory;
 
 public class ConsumerConfig {
 
+    public static final String MASTER_TOPIC = "master.events";
+    public static final String USERS_INPUT_EVENTS= "users.input.events";
+    public static final String MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_HOST = "MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_HOST";
+    public static final String MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_PORT = "MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_PORT";
+
     private static final Logger logger = LoggerFactory.getLogger(ConsumerConfig.class);
 
-    private static final String BROKER_LIST = System.getenv("kafka.broker.list") != null? System.getenv("kafka.broker.list") :"localhost:9092,localhost:9093,localhost:9094";
+    public static final String BROKER_LIST = System.getenv("kafka.broker.list") != null? System.getenv("kafka.broker.list") :"localhost:9092,localhost:9093,localhost:9094";
 
     public static Properties getConfig(String groupId, String valueSerializerClassName, boolean autoCommit) {
         Properties producerProperties = new Properties();

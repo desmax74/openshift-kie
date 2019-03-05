@@ -83,6 +83,9 @@ this create a yaml file and the route for us on openshift, like this (in routes 
   ```
   
   Your address will be
-  http://quick-drools-myproject.192.168.99.109.nip.io/hello
+  http://quick-drools-myproject.192.168.99.109.nip.io/rest/hello
+  
+  To see all the env available use the address
+  http://quick-drools-myproject.192.168.99.109.nip.io/rest/env
 
 

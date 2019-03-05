@@ -19,10 +19,7 @@ spec:
     spec:
       containers:
         - env:
-          - name: KAFKA_EXTERNAL_ADDRESSES
-            value: my-cluster-kafka-external-bootstrap.my-kafka-project.svc
-          - name: KAFKA_BOOTSTRAP
-            value: my-cluster-kafka-bootstrap.my-kafka-project.svc
+          name: openshift-kie-thorntail
           image: quickstarter/openshift-kie-thorntail:latest
           imagePullPolicy: IfNotPresent
           livenessProbe:
@@ -33,7 +30,6 @@ spec:
             initialDelaySeconds: 20
             periodSeconds: 10
             timeoutSeconds: 1
-          name: quick-drools
           ports:
             - containerPort: 8080
               name: http
