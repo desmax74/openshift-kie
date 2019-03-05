@@ -2,24 +2,28 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
-    app: openshift-kie
+    app: openshift-kie-thorntail
     version: v1
-  name: openshift-kie
+  name: openshift-kie-thorntail
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: openshift-kie
+      app: openshift-kie-thorntail
       version: v1
   template:
     metadata:
       labels:
-        app: openshift-kie
+        app: openshift-kie-thorntail
         version: v1
     spec:
       containers:
         - env:
-          image: quickstarter/openshift-kie:latest
+          - name: KAFKA_EXTERNAL_ADDRESSES
+            value: my-cluster-kafka-external-bootstrap.my-kafka-project.svc
+          - name: KAFKA_BOOTSTRAP
+            value: my-cluster-kafka-bootstrap.my-kafka-project.svc
+          image: quickstarter/openshift-kie-thorntail:latest
           imagePullPolicy: IfNotPresent
           livenessProbe:
             exec:

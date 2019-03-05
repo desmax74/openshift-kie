@@ -28,16 +28,16 @@ curl -d '{"name":"edo", "age":32}' -H "Content-Type: application/json" \
 
 #### Build Container on docker
 ```sh
-docker build -t quickstarter/openshift-kie .
+docker build -t quickstarter/openshift-kie-thorntail .
 docker images | grep openshift-kie
 ```
 
 #### Deploy on Openshift
 By default will be created under project called "My Project"
 ```sh
-kubectl create -f kubernetes/deployment.yml 
-kubectl create -f kubernetes/service.yml 
-oc expose service quick-drools
+kubectl create -f kubernetes/deployment.yaml 
+kubectl create -f kubernetes/service.yaml 
+oc expose service  openshift-kie-thorntail
 ```
 this create a yaml file and the route for us on openshift, like this (in routes section on My Project)
  ```yaml

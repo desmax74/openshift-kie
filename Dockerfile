@@ -1,4 +1,5 @@
 FROM openjdk:8-jre-alpine
+RUN apk add --no-cache curl
 ENV APP_HOME=/usr/app/
 WORKDIR $APP_HOME
 COPY target/*-thorntail.jar ./app.jar
