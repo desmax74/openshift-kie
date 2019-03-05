@@ -25,12 +25,16 @@ public class ProducerCallback implements Callback {
     private Logger logger = LoggerFactory.getLogger(ProducerCallback.class);
 
     @Override
-    public void onCompletion(RecordMetadata recordMetadata, Exception e) {
+    public void onCompletion(RecordMetadata recordMetadata,
+                             Exception e) {
         if (e != null) {
-            logger.error(e.getMessage(), e);
-        }else{
-            logger.info("AsynchronousProducer call success ! Topic:{} - Partition:{} - Offset:{}", recordMetadata.topic(), recordMetadata.partition(), recordMetadata.offset());
+            logger.error(e.getMessage(),
+                         e);
+        } else {
+            logger.info("AsynchronousProducer call success ! Topic:{} - Partition:{} - Offset:{}",
+                        recordMetadata.topic(),
+                        recordMetadata.partition(),
+                        recordMetadata.offset());
         }
-
     }
 }

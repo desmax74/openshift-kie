@@ -17,7 +17,7 @@ package org.kie.quickstart.pubsub.consumer;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 
-public abstract class ConsumerHandle {
+public interface ConsumerHandler {
 
-    public abstract void process(ConsumerRecord record);
+    public void process(ConsumerRecord record);
 }

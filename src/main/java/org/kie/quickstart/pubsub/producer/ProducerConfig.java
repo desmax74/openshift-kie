@@ -23,28 +23,32 @@ import org.slf4j.LoggerFactory;
 
 public class ProducerConfig {
 
+    public static final String MASTER_TOPIC = "master.events";
+    public static final String USERS_INPUT_TOPIC = "users.input.events";
     private static final Logger logger = LoggerFactory.getLogger(ProducerConfig.class);
-
-    private static final String BROKERS = System.getenv("kafka.broker.list") != null? System.getenv("kafka.broker.list") :"localhost:9092,localhost:9093,localhost:9094";
+    private static final String BROKERS = System.getenv("kafka.broker.list") != null ? System.getenv("kafka.broker.list") : "localhost:9092,localhost:9093,localhost:9094";
 
     public static Properties getConfig(String serializerClassName) {
         Properties producerProperties = new Properties();
-        producerProperties.put("bootstrap.servers", BROKERS);
-        producerProperties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        producerProperties.put("max.block.ms", 5000);
-        producerProperties.put("value.serializer", serializerClassName);
+        producerProperties.put("bootstrap.servers",
+                               BROKERS);
+        producerProperties.put("key.serializer",
+                               "org.apache.kafka.common.serialization.StringSerializer");
+        producerProperties.put("max.block.ms",
+                               5000);
+        producerProperties.put("value.serializer",
+                               serializerClassName);
         logConfig(producerProperties);
         return producerProperties;
     }
 
-    private static void logConfig( Properties producerProperties){
-        if(logger.isInfoEnabled()){
+    private static void logConfig(Properties producerProperties) {
+        if (logger.isInfoEnabled()) {
             StringBuilder sb = new StringBuilder();
-            for (Map.Entry<Object,Object> entry : producerProperties.entrySet()){
+            for (Map.Entry<Object, Object> entry : producerProperties.entrySet()) {
                 sb.append(entry.getKey().toString()).append(":").append(entry.getValue());
             }
             logger.info(sb.toString());
         }
     }
-
 }

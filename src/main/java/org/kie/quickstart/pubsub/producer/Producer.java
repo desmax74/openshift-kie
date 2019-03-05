@@ -23,11 +23,12 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 
-public interface Producer<K,V> {
+public interface Producer<K, V> {
 
     void start(Properties properties);
 
-    void start(Properties properties, KafkaProducer<K, V> kafkaProducer);
+    void start(Properties properties,
+               KafkaProducer<K, V> kafkaProducer);
 
     void stop();
 
@@ -35,5 +36,6 @@ public interface Producer<K,V> {
 
     RecordMetadata produceSync(ProducerRecord<K, V> producerRecord);
 
-    void produceAsync(ProducerRecord<K, V> producerRecord, Callback callback);
+    void produceAsync(ProducerRecord<K, V> producerRecord,
+                      Callback callback);
 }

@@ -15,7 +15,6 @@
  */
 package org.kie.quickstart.pubsub;
 
-
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -60,8 +59,9 @@ public class Whoami {
         return podID.equals(value.getKey().toString(StandardCharsets.UTF_8));
     }
 
-    public boolean iAmTheMaster(String podID){
-        CompletableFuture<PutResponse> cfPutResponse = etcdClient.putKey(MASTER_POD, podID);
+    public boolean iAmTheMaster(String podID) {
+        CompletableFuture<PutResponse> cfPutResponse = etcdClient.putKey(MASTER_POD,
+                                                                         podID);
         PutResponse putResponse = null;
         try {
             putResponse = cfPutResponse.get();
@@ -72,12 +72,11 @@ public class Whoami {
         if (putResponse == null) {
             return false;
         }
-        if(putResponse.hasPrevKv()){
+        if (putResponse.hasPrevKv()) {
             KeyValue previousMaster = putResponse.getPrevKv();
-            return ! previousMaster.getValue().toString(StandardCharsets.UTF_8).equals(podID);
-        }else{
+            return !previousMaster.getValue().toString(StandardCharsets.UTF_8).equals(podID);
+        } else {
             return true;
         }
     }
-
 }

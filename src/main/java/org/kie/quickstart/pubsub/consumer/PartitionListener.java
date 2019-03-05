@@ -23,17 +23,21 @@ import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRebalanceListener;
 import org.apache.kafka.clients.consumer.OffsetAndMetadata;
 import org.apache.kafka.common.TopicPartition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /***
  * IS an hook to save information when the partition is moved
  * @param <T>
  */
-public class PartitionListener <T> implements ConsumerRebalanceListener {
+public class PartitionListener<T> implements ConsumerRebalanceListener {
 
+    private Logger logger = LoggerFactory.getLogger(PartitionListener.class);
     private Consumer<String, T> consumer;
     private Map<TopicPartition, OffsetAndMetadata> offsets;
 
-    public PartitionListener(Consumer<String, T> consumer, Map<TopicPartition, OffsetAndMetadata> offsets) {
+    public PartitionListener(Consumer<String, T> consumer,
+                             Map<TopicPartition, OffsetAndMetadata> offsets) {
         this.consumer = consumer;
         this.offsets = offsets;
     }
@@ -51,14 +55,16 @@ public class PartitionListener <T> implements ConsumerRebalanceListener {
             try {
                 String offset = properties.getProperty(partition.topic() + "-" + partition.partition());
                 if (offset != null) {
-                    consumer.seek(partition, Long.valueOf(offset));
-                    System.out.printf("Consumer - partition %s - initOffset %s\n", partition.partition(), offset);
+                    consumer.seek(partition,
+                                  Long.valueOf(offset));
+                    logger.info("Consumer - partition {} - initOffset {}\n",
+                                      partition.partition(),
+                                      offset);
                 }
             } catch (Exception ex) {
-                System.out.printf("Consumer - partition %s - initOffset not from DB\n", partition.partition());
+                logger.info("Consumer - partition {} - initOffset not from DB\n",
+                                  partition.partition());
             }
-
         }
     }
-
 }

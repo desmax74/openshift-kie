@@ -25,7 +25,6 @@ public class ProducerEndpoint {
             append(ConsumerConfig.MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_PORT).append(":").
             append(System.getenv().get(ConsumerConfig.MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_PORT));
     logger.info("brokers:{}",sb.toString());
-    System.out.println(sb.toString());
     return sb.toString();
   }
 

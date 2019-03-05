@@ -15,6 +15,10 @@
  */
 package org.kie.quickstart.pubsub.producer;
 
+import java.util.Properties;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -22,11 +26,7 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Properties;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-
-public class EventProducer<T> extends AbstractProducer<String,T> implements Producer<String, T> {
+public class EventProducer<T> extends AbstractProducer<String, T> implements Producer<String, T> {
 
     private Logger logger = LoggerFactory.getLogger(EventProducer.class);
 
@@ -36,7 +36,8 @@ public class EventProducer<T> extends AbstractProducer<String,T> implements Prod
     }
 
     @Override
-    public void start(Properties properties, KafkaProducer<String, T> kafkaProducer) {
+    public void start(Properties properties,
+                      KafkaProducer<String, T> kafkaProducer) {
         producer = kafkaProducer;
     }
 
@@ -53,16 +54,19 @@ public class EventProducer<T> extends AbstractProducer<String,T> implements Prod
         try {
             recordMetadata = producer.send(producerRecord).get();
         } catch (InterruptedException e) {
-            logger.error("Error in produceSync!", e);
+            logger.error("Error in produceSync!",
+                         e);
         } catch (ExecutionException e) {
-            logger.error("Error in produceSync!", e);
+            logger.error("Error in produceSync!",
+                         e);
         }
         return recordMetadata;
     }
 
     @Override
-    public void produceAsync(ProducerRecord<String, T> producerRecord, Callback callback) {
-        producer.send(producerRecord, new ProducerCallback());
+    public void produceAsync(ProducerRecord<String, T> producerRecord,
+                             Callback callback) {
+        producer.send(producerRecord,
+                      new ProducerCallback());
     }
-
 }

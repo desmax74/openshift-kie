@@ -16,16 +16,19 @@
 package org.kie.quickstart.pubsub.utils;
 
 import org.apache.kafka.clients.producer.RecordMetadata;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RecordMetadataUtil {
 
+    private static final Logger logger = LoggerFactory.getLogger(RecordMetadataUtil.class);
+
     public static void prettyPrinter(RecordMetadata recordMetadata) {
-        if(recordMetadata != null) {
-            System.out.printf("Topic: %s - Partition: %d - Offset: %d\n",
-                    recordMetadata.topic(),
-                    recordMetadata.partition(),
-                    recordMetadata.offset());
+        if (recordMetadata != null && logger.isInfoEnabled()) {
+            logger.info("Topic: %s - Partition: %d - Offset: %d\n",
+                        recordMetadata.topic(),
+                        recordMetadata.partition(),
+                        recordMetadata.offset());
         }
     }
-
 }

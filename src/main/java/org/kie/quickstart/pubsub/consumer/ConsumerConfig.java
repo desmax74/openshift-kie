@@ -24,33 +24,37 @@ import org.slf4j.LoggerFactory;
 public class ConsumerConfig {
 
     public static final String MASTER_TOPIC = "master.events";
-    public static final String USERS_INPUT_EVENTS= "users.input.events";
+    public static final String USERS_INPUT_TOPIC = "users.input.events";
     public static final String MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_HOST = "MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_HOST";
     public static final String MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_PORT = "MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_PORT";
-
+    public static final String BROKER_LIST = System.getenv("kafka.broker.list") != null ? System.getenv("kafka.broker.list") : "localhost:9092,localhost:9093,localhost:9094";
     private static final Logger logger = LoggerFactory.getLogger(ConsumerConfig.class);
 
-    public static final String BROKER_LIST = System.getenv("kafka.broker.list") != null? System.getenv("kafka.broker.list") :"localhost:9092,localhost:9093,localhost:9094";
-
-    public static Properties getConfig(String groupId, String valueSerializerClassName, boolean autoCommit) {
+    public static Properties getConfig(String groupId,
+                                       String valueSerializerClassName,
+                                       boolean autoCommit) {
         Properties producerProperties = new Properties();
-        producerProperties.put("bootstrap.servers", BROKER_LIST);
-        producerProperties.put("group.id", groupId);
-        producerProperties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        producerProperties.put("value.deserializer", valueSerializerClassName);
-        producerProperties.setProperty("enable.auto.commit", String.valueOf(autoCommit));
+        producerProperties.put("bootstrap.servers",
+                               BROKER_LIST);
+        producerProperties.put("group.id",
+                               groupId);
+        producerProperties.put("key.deserializer",
+                               "org.apache.kafka.common.serialization.StringDeserializer");
+        producerProperties.put("value.deserializer",
+                               valueSerializerClassName);
+        producerProperties.setProperty("enable.auto.commit",
+                                       String.valueOf(autoCommit));
         logConfig(producerProperties);
         return producerProperties;
     }
 
-    private static void logConfig( Properties producerProperties){
-        if(logger.isInfoEnabled()){
+    private static void logConfig(Properties producerProperties) {
+        if (logger.isInfoEnabled()) {
             StringBuilder sb = new StringBuilder();
-            for (Map.Entry<Object,Object> entry : producerProperties.entrySet()){
+            for (Map.Entry<Object, Object> entry : producerProperties.entrySet()) {
                 sb.append(entry.getKey().toString()).append(":").append(entry.getValue());
             }
             logger.info(sb.toString());
         }
     }
-
 }

@@ -25,13 +25,15 @@ import java.util.Properties;
 
 import org.apache.kafka.clients.consumer.OffsetAndMetadata;
 import org.apache.kafka.common.TopicPartition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Used when is required to store the current offset between operation in the cluster
  */
 public class OffsetManager {
 
-    private static Properties prop;
+    private static Logger logger = LoggerFactory.getLogger(OffsetManager.class);
 
     public static Properties load() {
         Properties prop = null;
@@ -47,7 +49,7 @@ public class OffsetManager {
                 try {
                     input.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error(e.getMessage(), e);
                 }
             }
         }
@@ -61,23 +63,23 @@ public class OffsetManager {
         try {
             //todo store on infinispan/etcd
             output = new FileOutputStream("/tmp/offsets.properties");
-            for (Map.Entry<TopicPartition, OffsetAndMetadata> entry : offsetAndMetadataMap.entrySet())
-                prop.setProperty(entry.getKey().topic() + "-" + entry.getKey().partition(), String.valueOf(entry.getValue().offset()));
+            for (Map.Entry<TopicPartition, OffsetAndMetadata> entry : offsetAndMetadataMap.entrySet()) {
+                prop.setProperty(entry.getKey().topic() + "-" + entry.getKey().partition(),
+                                 String.valueOf(entry.getValue().offset()));
+            }
 
-            prop.store(output, null);
-
+            prop.store(output,
+                       null);
         } catch (IOException io) {
-            io.printStackTrace();
+            logger.error(io.getMessage(), io);
         } finally {
             if (output != null) {
                 try {
                     output.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error(e.getMessage(), e);
                 }
             }
-
         }
     }
-
 }

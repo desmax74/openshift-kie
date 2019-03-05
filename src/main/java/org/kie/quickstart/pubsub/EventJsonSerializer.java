@@ -18,8 +18,8 @@ package org.kie.quickstart.pubsub;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.kie.quickstart.pubsub.model.MyEvent;
 import org.apache.kafka.common.serialization.Serializer;
+import org.kie.quickstart.pubsub.model.MyEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,24 +28,28 @@ public class EventJsonSerializer implements Serializer<MyEvent> {
     private Logger logger = LoggerFactory.getLogger(EventJsonSerializer.class);
 
     @Override
-    public void configure(Map<String, ?> configs, boolean isKey) {}
+    public void configure(Map<String, ?> configs,
+                          boolean isKey) {
+    }
 
     @Override
-    public byte[] serialize(String topic, MyEvent data) {
+    public byte[] serialize(String topic,
+                            MyEvent data) {
         byte[] output = null;
         ObjectMapper mapper = new ObjectMapper();
         try {
             output = mapper.writeValueAsString(data).getBytes();
         } catch (Exception exception) {
-            logger.error("Error in serialize  {}", data, exception.getMessage(), exception);
+            logger.error("Error in serialize  {}",
+                         data,
+                         exception.getMessage(),
+                         exception);
         }
         return output;
-
     }
 
     @Override
     public void close() {
         //do nothing
     }
-
 }

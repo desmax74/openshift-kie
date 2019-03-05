@@ -34,39 +34,43 @@ public class EtcdClient {
     private Client client;
     private KV kvClient;
 
-    public EtcdClient(){}
+    public EtcdClient() {
+    }
 
-    public void startClient(){
+    public void startClient() {
         logger.info("Start etcd client");
         client = Client.builder().endpoints("http://localhost:2379").build();
         kvClient = client.getKVClient();
     }
 
-    public void closeClient(){
+    public void closeClient() {
         client.close();
         logger.info("Close etcd client");
     }
 
-    public Client getClient(){
+    public Client getClient() {
         return client;
     }
 
-    public KV getKVClient(){
+    public KV getKVClient() {
         return kvClient;
     }
 
-    public CompletableFuture<PutResponse> putKey(String key, String value) {
-        return kvClient.put(ByteSequence.from(key, StandardCharsets.UTF_8),
-                            ByteSequence.from(value, StandardCharsets.UTF_8));
+    public CompletableFuture<PutResponse> putKey(String key,
+                                                 String value) {
+        return kvClient.put(ByteSequence.from(key,
+                                              StandardCharsets.UTF_8),
+                            ByteSequence.from(value,
+                                              StandardCharsets.UTF_8));
     }
 
-    public CompletableFuture<GetResponse> getKey(String key){
-        return kvClient.get(ByteSequence.from(key, StandardCharsets.UTF_8));
+    public CompletableFuture<GetResponse> getKey(String key) {
+        return kvClient.get(ByteSequence.from(key,
+                                              StandardCharsets.UTF_8));
     }
 
-    public CompletableFuture<DeleteResponse> deleteKey(String key){
-        return kvClient.delete(ByteSequence.from(key, StandardCharsets.UTF_8));
+    public CompletableFuture<DeleteResponse> deleteKey(String key) {
+        return kvClient.delete(ByteSequence.from(key,
+                                                 StandardCharsets.UTF_8));
     }
-
-
 }
