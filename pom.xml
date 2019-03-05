@@ -16,7 +16,7 @@
         <version.thorntail>2.3.0.Final</version.thorntail>
         <version.org.kie>8.0.0-SNAPSHOT</version.org.kie>
         <version.kafka.client>2.1.1</version.kafka.client>
-        <version.jetcd>0.0.2</version.jetcd>
+        <version.jetcd>0.3.0</version.jetcd>
     </properties>
 
     <dependencyManagement>
@@ -71,7 +71,7 @@
             <artifactId>jaxrs</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.coreos</groupId>
+            <groupId>io.etcd</groupId>
             <artifactId>jetcd-core</artifactId>
             <version>${version.jetcd}</version>
         </dependency>

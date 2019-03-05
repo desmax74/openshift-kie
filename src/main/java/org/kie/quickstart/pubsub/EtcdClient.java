@@ -15,14 +15,15 @@
  */
 package org.kie.quickstart.pubsub;
 
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletableFuture;
 
-import com.coreos.jetcd.Client;
-import com.coreos.jetcd.KV;
-import com.coreos.jetcd.data.ByteSequence;
-import com.coreos.jetcd.kv.DeleteResponse;
-import com.coreos.jetcd.kv.GetResponse;
-import com.coreos.jetcd.kv.PutResponse;
+import io.etcd.jetcd.ByteSequence;
+import io.etcd.jetcd.Client;
+import io.etcd.jetcd.KV;
+import io.etcd.jetcd.kv.DeleteResponse;
+import io.etcd.jetcd.kv.GetResponse;
+import io.etcd.jetcd.kv.PutResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,16 +56,16 @@ public class EtcdClient {
     }
 
     public CompletableFuture<PutResponse> putKey(String key, String value) {
-        return kvClient.put(ByteSequence.fromString(key),
-                     ByteSequence.fromString(value));
+        return kvClient.put(ByteSequence.from(key, StandardCharsets.UTF_8),
+                            ByteSequence.from(value, StandardCharsets.UTF_8));
     }
 
     public CompletableFuture<GetResponse> getKey(String key){
-        return kvClient.get(ByteSequence.fromString(key));
+        return kvClient.get(ByteSequence.from(key, StandardCharsets.UTF_8));
     }
 
     public CompletableFuture<DeleteResponse> deleteKey(String key){
-        return kvClient.delete(ByteSequence.fromString(key));
+        return kvClient.delete(ByteSequence.from(key, StandardCharsets.UTF_8));
     }
 
 

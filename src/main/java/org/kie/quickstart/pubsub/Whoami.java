@@ -15,12 +15,14 @@
  */
 package org.kie.quickstart.pubsub;
 
+
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import com.coreos.jetcd.data.KeyValue;
-import com.coreos.jetcd.kv.GetResponse;
-import com.coreos.jetcd.kv.PutResponse;
+import io.etcd.jetcd.KeyValue;
+import io.etcd.jetcd.kv.GetResponse;
+import io.etcd.jetcd.kv.PutResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,7 +57,7 @@ public class Whoami {
             logger.error("more than once master pod");
         }
         KeyValue value = values.get(0);
-        return podID.equals(value.getKey().toStringUtf8());
+        return podID.equals(value.getKey().toString(StandardCharsets.UTF_8));
     }
 
     public boolean iAmTheMaster(String podID){
@@ -72,7 +74,7 @@ public class Whoami {
         }
         if(putResponse.hasPrevKv()){
             KeyValue previousMaster = putResponse.getPrevKv();
-            return ! previousMaster.getValue().toStringUtf8().equals(podID);
+            return ! previousMaster.getValue().toString(StandardCharsets.UTF_8).equals(podID);
         }else{
             return true;
         }
