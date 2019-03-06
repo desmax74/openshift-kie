@@ -27,7 +27,9 @@ public class ConsumerConfig {
     public static final String USERS_INPUT_TOPIC = "users.input.events";
     public static final String MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_HOST = "MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_HOST";
     public static final String MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_PORT = "MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_PORT";
-    public static final String BROKER_LIST = System.getenv("kafka.broker.list") != null ? System.getenv("kafka.broker.list") : "localhost:9092,localhost:9093,localhost:9094";
+    public static final String BROKER_URL = System.getenv(MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_HOST);
+    public static final String BROKER_PORT = System.getenv(MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_PORT);
+    //public static final String BROKER_LIST = System.getenv("kafka.broker.list") != null ? System.getenv("kafka.broker.list") : "localhost:9092,localhost:9093,localhost:9094";
     private static final Logger logger = LoggerFactory.getLogger(ConsumerConfig.class);
 
     public static Properties getConfig(String groupId,
@@ -35,7 +37,7 @@ public class ConsumerConfig {
                                        boolean autoCommit) {
         Properties producerProperties = new Properties();
         producerProperties.put("bootstrap.servers",
-                               BROKER_LIST);
+                               BROKER_URL+":"+BROKER_PORT);
         producerProperties.put("group.id",
                                groupId);
         producerProperties.put("key.deserializer",

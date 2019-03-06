@@ -26,12 +26,15 @@ public class ProducerConfig {
     public static final String MASTER_TOPIC = "master.events";
     public static final String USERS_INPUT_TOPIC = "users.input.events";
     private static final Logger logger = LoggerFactory.getLogger(ProducerConfig.class);
-    private static final String BROKERS = System.getenv("kafka.broker.list") != null ? System.getenv("kafka.broker.list") : "localhost:9092,localhost:9093,localhost:9094";
+    public static final String MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_HOST = "MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_HOST";
+    public static final String MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_PORT = "MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_PORT";
+    public static final String BROKER_URL = System.getenv(MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_HOST);
+    public static final String BROKER_PORT = System.getenv(MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_PORT);
+    //private static final String BROKERS = System.getenv("kafka.broker.list") != null ? System.getenv("kafka.broker.list") : "localhost:9092,localhost:9093,localhost:9094";
 
     public static Properties getConfig(String serializerClassName) {
         Properties producerProperties = new Properties();
-        producerProperties.put("bootstrap.servers",
-                               BROKERS);
+        producerProperties.put("bootstrap.servers",BROKER_URL+":"+BROKER_PORT);
         producerProperties.put("key.serializer",
                                "org.apache.kafka.common.serialization.StringSerializer");
         producerProperties.put("max.block.ms",
