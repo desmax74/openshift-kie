@@ -21,7 +21,7 @@ public class ProducerEndpoint {
   @Produces(MediaType.TEXT_PLAIN)
   public String brokers() {
     StringBuilder sb = new StringBuilder();
-    sb.append("kafka.broker.list:").append(ConsumerConfig.BROKER_LIST).append("\n").
+    sb.
             append(ConsumerConfig.MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_HOST).append(":").
             append(System.getenv().get(ConsumerConfig.MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_HOST)).append("\n").
             append(ConsumerConfig.MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_PORT).append(":").
