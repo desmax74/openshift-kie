@@ -34,6 +34,11 @@ public class ConsumerController {
     public Map<String, List<PartitionInfo>> getTopics() {
         Properties properties = new Properties();
         properties.setProperty("desererializerClass", "org.kie.quickstart.pubsub.EventJsonSerializer");
+        properties.put("bootstrap.servers", ConsumerConfig.BROKER_URL+":"+ConsumerConfig.BROKER_PORT);
+        properties.put("group.id", "1");
+        properties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        properties.put("value.deserializer", "org.kie.quickstart.pubsub.EventJsonSerializer");
+        properties.setProperty("enable.auto.commit",String.valueOf(true));
         BaseConsumer<MyEvent> consumer = new BaseConsumer<>("1", properties, new EmptyConsumerHandler());
         return consumer.getTopics();
     }
