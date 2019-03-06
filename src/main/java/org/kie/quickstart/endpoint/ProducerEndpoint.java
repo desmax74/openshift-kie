@@ -14,28 +14,31 @@ import org.slf4j.LoggerFactory;
 @Path("/pub")
 public class ProducerEndpoint {
 
-  private Logger logger = LoggerFactory.getLogger(ProducerEndpoint.class);
+    private Logger logger = LoggerFactory.getLogger(ProducerEndpoint.class);
 
-  @GET
-  @Path("/brokers")
-  @Produces(MediaType.TEXT_PLAIN)
-  public String brokers() {
-    StringBuilder sb = new StringBuilder();
-    sb.
-            append(ConsumerConfig.MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_HOST).append(":").
-            append(System.getenv().get(ConsumerConfig.MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_HOST)).append("\n").
-            append(ConsumerConfig.MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_PORT).append(":").
-            append(System.getenv().get(ConsumerConfig.MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_PORT));
-    logger.info("brokers:{}",sb.toString());
-    return sb.toString();
-  }
+    @GET
+    @Path("/brokers")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String brokers() {
+        StringBuilder sb = new StringBuilder();
+        sb.
+                append(ConsumerConfig.MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_HOST).append(":").
+                append(System.getenv().get(ConsumerConfig.MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_HOST)).append("\n").
+                append(ConsumerConfig.MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_PORT).append(":").
+                append(System.getenv().get(ConsumerConfig.MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_PORT));
+        logger.info("brokers:{}",
+                    sb.toString());
+        return sb.toString();
+    }
 
-  @GET
-  @Path("/demo/{eventNumber}")
-  @Produces(MediaType.TEXT_PLAIN)
-  public String demo(@PathParam("eventNumber") Integer eventNumber) {
-    logger.info("Requested {} events", eventNumber);
-    MyEventProducerApp.businessLogic(eventNumber);
-    return "produced" +eventNumber + "events";
-  }
+    @GET
+    @Path("/demo/{eventNumber}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String demo(@PathParam("eventNumber") Integer eventNumber) {
+        logger.info("Requested {} events",
+                    eventNumber);
+        MyEventProducerApp.businessLogic(eventNumber);
+        return "produced" + eventNumber + "events";
+    }
+
 }

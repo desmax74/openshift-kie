@@ -1,12 +1,17 @@
 package org.kie.quickstart;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
+import org.apache.kafka.common.PartitionInfo;
+import org.kie.quickstart.pubsub.consumer.BaseConsumer;
+import org.kie.quickstart.pubsub.consumer.ConsumerConfig;
 import org.kie.quickstart.pubsub.consumer.ConsumerThread;
 import org.kie.quickstart.pubsub.consumer.EmptyConsumerHandler;
 import org.kie.quickstart.pubsub.model.MyEvent;
 
 public class ConsumerController {
-
-    private final String TOPIC = "orders";
 
     public void consumeEvents(int numberOfConsumer, String groupName, int duration, int pollSize) {
         for(int i = 0; i < numberOfConsumer; i++) {
@@ -14,7 +19,7 @@ public class ConsumerController {
                     new ConsumerThread<MyEvent>(
                             String.valueOf(i),
                             groupName,
-                            TOPIC,
+                            ConsumerConfig.USERS_INPUT_TOPIC,
                             "org.kie.quickstart.pubsub.EventJsonSerializer",
                             pollSize,
                             duration,
@@ -24,5 +29,12 @@ public class ConsumerController {
                             new EmptyConsumerHandler()));
             t.start();
         }
+    }
+
+    public Map<String, List<PartitionInfo>> getTopics() {
+        Properties properties = new Properties();
+        properties.setProperty("desererializerClass", "org.kie.quickstart.pubsub.EventJsonSerializer");
+        BaseConsumer<MyEvent> consumer = new BaseConsumer<>("1", properties, new EmptyConsumerHandler());
+        return consumer.getTopics();
     }
 }

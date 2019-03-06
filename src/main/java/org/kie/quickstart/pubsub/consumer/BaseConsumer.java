@@ -54,6 +54,14 @@ public class BaseConsumer<T> implements EventConsumer {
         this.consumerHandle = consumerHandle;
     }
 
+    public Map<String, List<PartitionInfo>> getTopics(){
+        if(consumer != null) {
+            return consumer.listTopics();
+        }else{
+            return Collections.emptyMap();
+        }
+    }
+
     @Override
     public void subscribe(String groupId,
                           String topic,
