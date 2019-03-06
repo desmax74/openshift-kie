@@ -15,7 +15,7 @@ public class ConsumerController {
                             String.valueOf(i),
                             groupName,
                             TOPIC,
-                            "com.redhat.kafka.order.process.consumer.OrderEventJsonDeserializer",
+                            "org.kie.quickstart.pubsub.EventJsonSerializer",
                             pollSize,
                             duration,
                             false ,

@@ -6,19 +6,20 @@ import java.util.UUID;
 
 import org.kie.quickstart.pubsub.model.MyEvent;
 
-//For demo
+//For demo purpose
 public class MyEventProducerApp {
 
     public static void main (String [] args) {
-        ProducerController producerController = new ProducerController();
+        businessLogic(100);
+    }
 
+    public static void businessLogic(Integer eventNumber){
+        ProducerController producerController = new ProducerController();
         List<MyEvent> events = new ArrayList<>();
-        for(int i=0; i < 100; i++) {
+        for(int i=0; i < eventNumber; i++) {
             events.add(new MyEvent("ID-" + UUID.randomUUID().toString(), "Name-" + UUID.randomUUID().toString()));
         }
         producerController.create(events);
-
-
     }
 
 }
