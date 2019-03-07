@@ -31,8 +31,7 @@ public class EventProducer<T> extends AbstractProducer<String, T> implements Pro
     private Logger logger = LoggerFactory.getLogger(EventProducer.class);
 
     public void start(Properties properties) {
-        producer = new KafkaProducer(
-                ProducerConfig.getConfig(properties.getProperty("valueSerializer")));
+        producer = new KafkaProducer(properties);
     }
 
     @Override

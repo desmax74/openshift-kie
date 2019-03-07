@@ -7,7 +7,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.kie.quickstart.MyEventProducerApp;
-import org.kie.quickstart.pubsub.consumer.ConsumerConfig;
+import org.kie.quickstart.pubsub.consumer.PubSubConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,15 +20,7 @@ public class ProducerEndpoint {
     @Path("/brokers")
     @Produces(MediaType.TEXT_PLAIN)
     public String brokers() {
-        StringBuilder sb = new StringBuilder();
-        sb.
-                append(ConsumerConfig.MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_HOST).append(":").
-                append(System.getenv().get(ConsumerConfig.MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_HOST)).append("\n").
-                append(ConsumerConfig.MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_PORT).append(":").
-                append(System.getenv().get(ConsumerConfig.MY_CLUSTER_KAFKA_BOOTSTRAP_SERVICE_PORT));
-        logger.info("brokers:{}",
-                    sb.toString());
-        return sb.toString();
+        return PubSubConfig.getBotStrapServers();
     }
 
     @GET

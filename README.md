@@ -28,7 +28,7 @@ curl -d '{"name":"edo", "age":32}' -H "Content-Type: application/json" \
 
 #### Build Container on docker
 ```sh
-docker build -t quickstarter/openshift-kie-thorntail .
+docker build -t quickstarter/openshift-kie-thorntail:latest .
 docker images | grep openshift-kie
 ```
 

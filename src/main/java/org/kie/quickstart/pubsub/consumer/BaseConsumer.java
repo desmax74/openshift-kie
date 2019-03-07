@@ -66,9 +66,7 @@ public class BaseConsumer<T> implements EventConsumer {
     public void subscribe(String groupId,
                           String topic,
                           boolean autoCommit) {
-        consumer = new KafkaConsumer<>(ConsumerConfig.getConfig(groupId,
-                                                                properties.getProperty("desererializerClass"),
-                                                                autoCommit));
+        consumer = new KafkaConsumer<>(PubSubConfig.getDefaultConfig());
         consumer.subscribe(Collections.singletonList(topic),
                            new PartitionListener(consumer,
                                                  offsets));
@@ -135,10 +133,7 @@ public class BaseConsumer<T> implements EventConsumer {
                           List partitions,
                           boolean autoCommit) {
         boolean isAssigned = false;
-        consumer = new KafkaConsumer<>(
-                ConsumerConfig.getConfig("",
-                                         properties.getProperty("desererializerClass"),
-                                         autoCommit));
+        consumer = new KafkaConsumer<>(PubSubConfig.getDefaultConfig());
         List<PartitionInfo> partitionsInfo = consumer.partitionsFor(topic);
         Collection<TopicPartition> partitionCollection = new ArrayList<>();
         if (partitionsInfo != null) {
@@ -167,8 +162,7 @@ public class BaseConsumer<T> implements EventConsumer {
             //store next offset to commit
             offsets.put(new TopicPartition(record.topic(),
                                            record.partition()),
-                        new
-                                OffsetAndMetadata(record.offset() + 1,
+                        new OffsetAndMetadata(record.offset() + 1,
                                                   "null"));
             consumerHandle.process(record);
         }

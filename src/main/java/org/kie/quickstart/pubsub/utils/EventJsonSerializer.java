@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.quickstart.pubsub;
+package org.kie.quickstart.pubsub.utils;
 
 import java.util.Map;
 

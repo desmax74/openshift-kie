@@ -58,7 +58,7 @@ public class PodConsumer<T> implements EventConsumer {
     public void subscribe(String groupId,
                           String topic,
                           boolean autoCommit) {
-        consumer = new KafkaConsumer<>(ConsumerConfig.getConfig(groupId,
+        consumer = new KafkaConsumer<>(PubSubConfig.getConfig(groupId,
                                                                 properties.getProperty("desererializerClass"),
                                                                 autoCommit));
         consumer.subscribe(Collections.singletonList(topic),
@@ -125,7 +125,7 @@ public class PodConsumer<T> implements EventConsumer {
                           List partitions,
                           boolean autoCommit) {
         boolean isAssigned = false;
-        consumer = new KafkaConsumer<>(ConsumerConfig.getConfig("",
+        consumer = new KafkaConsumer<>(PubSubConfig.getConfig("",
                                                                 properties.getProperty("desererializerClass"),
                                                                 autoCommit));
         List<PartitionInfo> partitionsInfo = consumer.partitionsFor(topic);

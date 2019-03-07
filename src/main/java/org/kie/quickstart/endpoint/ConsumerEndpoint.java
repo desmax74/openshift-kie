@@ -24,7 +24,16 @@ public class ConsumerEndpoint {
     public String demo(@PathParam("consumerNumber") Integer consumerNumber) {
         logger.info("Requested {} consumers", consumerNumber);
         MyEventConsumerApp.businessLogic(consumerNumber);
-        return "started" +consumerNumber + "consumer";
+        return "started" +consumerNumber + " consumer";
+    }
+
+    @GET
+    @Path("/demo")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String demo() {
+        logger.info("Requested {} consumers", 3);
+        MyEventConsumerApp.businessLogic(3);
+        return "started 3 consumer";
     }
 
     @GET

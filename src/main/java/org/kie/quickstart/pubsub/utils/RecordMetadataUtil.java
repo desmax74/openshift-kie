@@ -25,10 +25,11 @@ public class RecordMetadataUtil {
 
     public static void prettyPrinter(RecordMetadata recordMetadata) {
         if (recordMetadata != null && logger.isInfoEnabled()) {
-            logger.info("Topic: %s - Partition: %d - Offset: %d\n",
+            logger.info("Topic: {} - Partition: {} - Offset: {} - TimeStamp: {}\n",
                         recordMetadata.topic(),
                         recordMetadata.partition(),
-                        recordMetadata.offset());
+                        recordMetadata.offset(),
+                        recordMetadata.timestamp());
         }
     }
 }
