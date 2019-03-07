@@ -11,6 +11,10 @@ import org.kie.quickstart.pubsub.model.MyEvent;
 
 public class ConsumerController {
 
+  public ConsumerController(){
+
+  }
+
     public void consumeEvents(int numberOfConsumer, String groupName, int duration, int pollSize) {
         for(int i = 0; i < numberOfConsumer; i++) {
             Thread t = new Thread(
@@ -28,6 +32,22 @@ public class ConsumerController {
             t.start();
         }
     }
+
+  public void consumeEvents(String groupName, int duration, int pollSize) {
+      Thread t = new Thread(
+              new ConsumerThread<MyEvent>(
+                      "1",
+                      groupName,
+                      PubSubConfig.MASTER_TOPIC,
+                      "org.kie.quickstart.pubsub.utils.EventJsonSerializer",
+                      pollSize,
+                      duration,
+                      false ,
+                      true,
+                      true,
+                      new EmptyConsumerHandler()));
+      t.start();
+  }
 
     public Map<String, List<PartitionInfo>> getTopics() {
         BaseConsumer<MyEvent> consumer = new BaseConsumer<>("1", PubSubConfig.getDefaultConfig(), new EmptyConsumerHandler());

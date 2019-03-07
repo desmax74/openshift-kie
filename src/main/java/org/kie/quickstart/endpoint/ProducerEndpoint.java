@@ -14,6 +14,8 @@ import org.slf4j.LoggerFactory;
 @Path("/pub")
 public class ProducerEndpoint {
 
+    private static MyEventProducerApp myEventProducerApp = new MyEventProducerApp();
+
     private Logger logger = LoggerFactory.getLogger(ProducerEndpoint.class);
 
     @GET
@@ -27,10 +29,9 @@ public class ProducerEndpoint {
     @Path("/demo/{eventNumber}")
     @Produces(MediaType.TEXT_PLAIN)
     public String demo(@PathParam("eventNumber") Integer eventNumber) {
-        logger.info("Requested {} events",
-                    eventNumber);
-        MyEventProducerApp.businessLogic(eventNumber);
-        return "produced" + eventNumber + "events";
+        logger.info("Requested {} events", eventNumber);
+        myEventProducerApp.businessLogic(eventNumber);
+        return "produced " + eventNumber + " events";
     }
 
 }

@@ -17,23 +17,14 @@ import org.slf4j.LoggerFactory;
 public class ConsumerEndpoint {
 
     private Logger logger = LoggerFactory.getLogger(ProducerEndpoint.class);
-
-    @GET
-    @Path("/demo/{consumerNumber}")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String demo(@PathParam("consumerNumber") Integer consumerNumber) {
-        logger.info("Requested {} consumers", consumerNumber);
-        MyEventConsumerApp.businessLogic(consumerNumber);
-        return "started" +consumerNumber + " consumer";
-    }
+    private static MyEventConsumerApp myEventConsumerApp= new MyEventConsumerApp();
 
     @GET
     @Path("/demo")
     @Produces(MediaType.TEXT_PLAIN)
     public String demo() {
-        logger.info("Requested {} consumers", 3);
-        MyEventConsumerApp.businessLogic(3);
-        return "started 3 consumer";
+        myEventConsumerApp.businessLogic();
+        return "started 1 consumer";
     }
 
     @GET
@@ -41,7 +32,7 @@ public class ConsumerEndpoint {
     @Produces(MediaType.TEXT_PLAIN)
     public String topics() {
         logger.info("Topics");
-        Map<String, List<PartitionInfo>> topics = MyEventConsumerApp.getTopics();
+        Map<String, List<PartitionInfo>> topics = myEventConsumerApp.getTopics();
         StringBuilder sb = new StringBuilder();
         for(Map.Entry entry :topics.entrySet()){
             sb.append("Key:").append(entry.getKey()).append(":]");

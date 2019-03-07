@@ -8,17 +8,13 @@ import org.apache.kafka.common.PartitionInfo;
 //For demo purpose
 public class MyEventConsumerApp {
 
-    public static void main (String [] args) {
-        businessLogic(3);
+    private   ConsumerController consumerController = new ConsumerController();
+
+    public void businessLogic(){
+        consumerController.consumeEvents("group-1", -1, 10);
     }
 
-    public static void businessLogic(Integer consumerNumber){
-        ConsumerController consumerController = new ConsumerController();
-        consumerController.consumeEvents(consumerNumber, "group-1", -1, 10);
-    }
-
-    public static Map<String, List<PartitionInfo>> getTopics(){
-        ConsumerController consumerController = new ConsumerController();
+    public Map<String, List<PartitionInfo>> getTopics(){
         return consumerController.getTopics();
     }
 }
